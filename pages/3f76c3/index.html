@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>《从0学习Flink源码》——构建源码测试环境 | 从零学习大数据</title>
+    <meta name="generator" content="VuePress 1.9.5">
+    <link rel="icon" href="/img/favicon.ico">
+    <meta name="description" content="web前端技术博客,专注web前端学习与总结。JavaScript,js,ES6,TypeScript,vue,React,python,css3,html5,Node,git,github等技术文章。">
+    <meta name="keywords" content="前端博客,个人技术博客,前端,前端开发,前端框架,web前端,前端面试题,技术文档,学习,面试,JavaScript,js,ES6,TypeScript,vue,python,css3,html5,Node,git,github,markdown">
+    <meta name="baidu-site-verification" content="7F55weZDDc">
+    <meta name="theme-color" content="#11a8cd">
+    
+    <link rel="preload" href="/assets/css/0.styles.e5addeae.css" as="style"><link rel="preload" href="/assets/js/app.69860091.js" as="script"><link rel="preload" href="/assets/js/2.5a5d1011.js" as="script"><link rel="preload" href="/assets/js/250.d18d274b.js" as="script"><link rel="prefetch" href="/assets/js/10.923ff8fe.js"><link rel="prefetch" href="/assets/js/100.f16aede8.js"><link rel="prefetch" href="/assets/js/101.16b3943d.js"><link rel="prefetch" href="/assets/js/102.1b982033.js"><link rel="prefetch" href="/assets/js/103.0edcb49a.js"><link rel="prefetch" href="/assets/js/104.93fd3934.js"><link rel="prefetch" href="/assets/js/105.7b351476.js"><link rel="prefetch" href="/assets/js/106.05c3afe2.js"><link rel="prefetch" href="/assets/js/107.17f5d621.js"><link rel="prefetch" href="/assets/js/108.6b0b469a.js"><link rel="prefetch" href="/assets/js/109.5fe5c7fd.js"><link rel="prefetch" href="/assets/js/11.5a5e6faf.js"><link rel="prefetch" href="/assets/js/110.8c2e1ad0.js"><link rel="prefetch" href="/assets/js/111.e7f443a4.js"><link rel="prefetch" href="/assets/js/112.3cc06ecb.js"><link rel="prefetch" href="/assets/js/113.0fd65e42.js"><link rel="prefetch" href="/assets/js/114.f40f9e82.js"><link rel="prefetch" href="/assets/js/115.db5479c4.js"><link rel="prefetch" href="/assets/js/116.584588db.js"><link rel="prefetch" href="/assets/js/117.0389dc01.js"><link rel="prefetch" href="/assets/js/118.20eb6ebf.js"><link rel="prefetch" href="/assets/js/119.aaaa830d.js"><link rel="prefetch" href="/assets/js/12.5bcae2a5.js"><link rel="prefetch" href="/assets/js/120.96fe3cc8.js"><link rel="prefetch" href="/assets/js/121.c12e5733.js"><link rel="prefetch" href="/assets/js/122.0b114237.js"><link rel="prefetch" href="/assets/js/123.85896876.js"><link rel="prefetch" href="/assets/js/124.d4ce4448.js"><link rel="prefetch" href="/assets/js/125.a07e629d.js"><link rel="prefetch" href="/assets/js/126.e82bc271.js"><link rel="prefetch" href="/assets/js/127.b966dc51.js"><link rel="prefetch" href="/assets/js/128.f5318311.js"><link rel="prefetch" href="/assets/js/129.033da70b.js"><link rel="prefetch" href="/assets/js/13.b0e48d3c.js"><link rel="prefetch" href="/assets/js/130.6e51a8a3.js"><link rel="prefetch" href="/assets/js/131.a9eac853.js"><link rel="prefetch" href="/assets/js/132.51cc0fe9.js"><link rel="prefetch" href="/assets/js/133.7c4e5fa5.js"><link rel="prefetch" href="/assets/js/134.0d4649d4.js"><link rel="prefetch" href="/assets/js/135.2795b689.js"><link rel="prefetch" href="/assets/js/136.6d810189.js"><link rel="prefetch" href="/assets/js/137.5efba685.js"><link rel="prefetch" href="/assets/js/138.e6ffeb9b.js"><link rel="prefetch" href="/assets/js/139.0f6209a7.js"><link rel="prefetch" href="/assets/js/14.aa487061.js"><link rel="prefetch" href="/assets/js/140.d608dfc1.js"><link rel="prefetch" href="/assets/js/141.260a5e10.js"><link rel="prefetch" href="/assets/js/142.a1bf6834.js"><link rel="prefetch" href="/assets/js/143.e8504b72.js"><link rel="prefetch" href="/assets/js/144.473e503a.js"><link rel="prefetch" href="/assets/js/145.05597eba.js"><link rel="prefetch" href="/assets/js/146.720763ca.js"><link rel="prefetch" href="/assets/js/147.4f8213bf.js"><link rel="prefetch" href="/assets/js/148.822505fd.js"><link rel="prefetch" href="/assets/js/149.0012118f.js"><link rel="prefetch" href="/assets/js/15.9daa4aeb.js"><link rel="prefetch" href="/assets/js/150.8fc18c42.js"><link rel="prefetch" href="/assets/js/151.5fafe6cd.js"><link rel="prefetch" href="/assets/js/152.30d29af5.js"><link rel="prefetch" href="/assets/js/153.24749e28.js"><link rel="prefetch" href="/assets/js/154.f6e6152a.js"><link rel="prefetch" href="/assets/js/155.d6998d0c.js"><link rel="prefetch" href="/assets/js/156.a0b198c0.js"><link rel="prefetch" href="/assets/js/157.a4168bf4.js"><link rel="prefetch" href="/assets/js/158.df0a8e57.js"><link rel="prefetch" href="/assets/js/159.9c922bc7.js"><link rel="prefetch" href="/assets/js/16.181cffa1.js"><link rel="prefetch" href="/assets/js/160.b0dfe382.js"><link rel="prefetch" href="/assets/js/161.74b287eb.js"><link rel="prefetch" href="/assets/js/162.e53e48f5.js"><link rel="prefetch" href="/assets/js/163.858bdc76.js"><link rel="prefetch" href="/assets/js/164.db9e00ed.js"><link rel="prefetch" href="/assets/js/165.7665ebd3.js"><link rel="prefetch" href="/assets/js/166.bdec7786.js"><link rel="prefetch" href="/assets/js/167.943c7fac.js"><link rel="prefetch" href="/assets/js/168.82b92810.js"><link rel="prefetch" href="/assets/js/169.79bbcbe7.js"><link rel="prefetch" href="/assets/js/17.aed045e3.js"><link rel="prefetch" href="/assets/js/170.3c6a8856.js"><link rel="prefetch" href="/assets/js/171.7b446bf8.js"><link rel="prefetch" href="/assets/js/172.9b4f968c.js"><link rel="prefetch" href="/assets/js/173.fbc1675b.js"><link rel="prefetch" href="/assets/js/174.73be5b8d.js"><link rel="prefetch" href="/assets/js/175.249c730a.js"><link rel="prefetch" href="/assets/js/176.bdcc8567.js"><link rel="prefetch" href="/assets/js/177.670af4ec.js"><link rel="prefetch" href="/assets/js/178.8f4a08d1.js"><link rel="prefetch" href="/assets/js/179.79ede7b6.js"><link rel="prefetch" href="/assets/js/18.5d983a22.js"><link rel="prefetch" href="/assets/js/180.bf9b14b2.js"><link rel="prefetch" href="/assets/js/181.af12bc7e.js"><link rel="prefetch" href="/assets/js/182.c209db51.js"><link rel="prefetch" href="/assets/js/183.b4865945.js"><link rel="prefetch" href="/assets/js/184.7e08d8a2.js"><link rel="prefetch" href="/assets/js/185.89540961.js"><link rel="prefetch" href="/assets/js/186.bf93d0cf.js"><link rel="prefetch" href="/assets/js/187.c7ab2562.js"><link rel="prefetch" href="/assets/js/188.65098466.js"><link rel="prefetch" href="/assets/js/189.6435b2ab.js"><link rel="prefetch" href="/assets/js/19.1f9fbdc9.js"><link rel="prefetch" href="/assets/js/190.7b09958a.js"><link rel="prefetch" href="/assets/js/191.2cf71180.js"><link rel="prefetch" href="/assets/js/192.8d9704a7.js"><link rel="prefetch" href="/assets/js/193.bf6325b9.js"><link rel="prefetch" href="/assets/js/194.4f0fafd1.js"><link rel="prefetch" href="/assets/js/195.246863ac.js"><link rel="prefetch" href="/assets/js/196.f608f32b.js"><link rel="prefetch" href="/assets/js/197.f6cc8f50.js"><link rel="prefetch" href="/assets/js/198.a5578d26.js"><link rel="prefetch" href="/assets/js/199.11890423.js"><link rel="prefetch" href="/assets/js/20.4cb88e4b.js"><link rel="prefetch" href="/assets/js/200.c9f8e946.js"><link rel="prefetch" href="/assets/js/201.ce037fc7.js"><link rel="prefetch" href="/assets/js/202.ef0539ce.js"><link rel="prefetch" href="/assets/js/203.988c68d9.js"><link rel="prefetch" href="/assets/js/204.6c137aab.js"><link rel="prefetch" href="/assets/js/205.9036bb65.js"><link rel="prefetch" href="/assets/js/206.c580525c.js"><link rel="prefetch" href="/assets/js/207.7c41326a.js"><link rel="prefetch" href="/assets/js/208.1607d918.js"><link rel="prefetch" href="/assets/js/209.9259989c.js"><link rel="prefetch" href="/assets/js/21.80ec6f40.js"><link rel="prefetch" href="/assets/js/210.d50db2ef.js"><link rel="prefetch" href="/assets/js/211.bc2685b0.js"><link rel="prefetch" href="/assets/js/212.efea3cf2.js"><link rel="prefetch" href="/assets/js/213.bce9f926.js"><link rel="prefetch" href="/assets/js/214.904b4497.js"><link rel="prefetch" href="/assets/js/215.6aefea59.js"><link rel="prefetch" href="/assets/js/216.e031d3bd.js"><link rel="prefetch" href="/assets/js/217.e6326d37.js"><link rel="prefetch" href="/assets/js/218.9aed6d93.js"><link rel="prefetch" href="/assets/js/219.9e16adc0.js"><link rel="prefetch" href="/assets/js/22.05fa6204.js"><link rel="prefetch" href="/assets/js/220.b214d6d8.js"><link rel="prefetch" href="/assets/js/221.bc937a8c.js"><link rel="prefetch" href="/assets/js/222.a113a4fb.js"><link rel="prefetch" href="/assets/js/223.385290e7.js"><link rel="prefetch" href="/assets/js/224.8130ac54.js"><link rel="prefetch" href="/assets/js/225.f39ff910.js"><link rel="prefetch" href="/assets/js/226.099d1901.js"><link rel="prefetch" href="/assets/js/227.e1f6b467.js"><link rel="prefetch" href="/assets/js/228.d82f8db3.js"><link rel="prefetch" href="/assets/js/229.eda913c0.js"><link rel="prefetch" href="/assets/js/23.33289b0e.js"><link rel="prefetch" href="/assets/js/230.a4020d42.js"><link rel="prefetch" href="/assets/js/231.f37f1b59.js"><link rel="prefetch" href="/assets/js/232.6f2c9e2d.js"><link rel="prefetch" href="/assets/js/233.90b6ca00.js"><link rel="prefetch" href="/assets/js/234.aa025266.js"><link rel="prefetch" href="/assets/js/235.89829e8d.js"><link rel="prefetch" href="/assets/js/236.0de24334.js"><link rel="prefetch" href="/assets/js/237.ca10ac0d.js"><link rel="prefetch" href="/assets/js/238.bc0b2f20.js"><link rel="prefetch" href="/assets/js/239.b7361c91.js"><link rel="prefetch" href="/assets/js/24.222b2e5a.js"><link rel="prefetch" href="/assets/js/240.7fdb9c15.js"><link rel="prefetch" href="/assets/js/241.439455de.js"><link rel="prefetch" href="/assets/js/242.3a285408.js"><link rel="prefetch" href="/assets/js/243.9060c910.js"><link rel="prefetch" href="/assets/js/244.65c17482.js"><link rel="prefetch" href="/assets/js/245.655b77db.js"><link rel="prefetch" href="/assets/js/246.de53591d.js"><link rel="prefetch" href="/assets/js/247.a1411e89.js"><link rel="prefetch" href="/assets/js/248.f2b6d619.js"><link rel="prefetch" href="/assets/js/249.40cc2013.js"><link rel="prefetch" href="/assets/js/25.fd519c59.js"><link rel="prefetch" href="/assets/js/251.221ffd29.js"><link rel="prefetch" href="/assets/js/252.749deb12.js"><link rel="prefetch" href="/assets/js/253.cb462023.js"><link rel="prefetch" href="/assets/js/254.8b979b0e.js"><link rel="prefetch" href="/assets/js/255.c420fc14.js"><link rel="prefetch" href="/assets/js/256.cc875ff8.js"><link rel="prefetch" href="/assets/js/257.80c6d2c7.js"><link rel="prefetch" href="/assets/js/258.039d78aa.js"><link rel="prefetch" href="/assets/js/259.45822a82.js"><link rel="prefetch" href="/assets/js/26.c77d9f44.js"><link rel="prefetch" href="/assets/js/260.9606e8ea.js"><link rel="prefetch" href="/assets/js/261.5bb91bcb.js"><link rel="prefetch" href="/assets/js/262.c14ea476.js"><link rel="prefetch" href="/assets/js/263.4d300af5.js"><link rel="prefetch" href="/assets/js/264.4965d6cd.js"><link rel="prefetch" href="/assets/js/265.3ab3d8df.js"><link rel="prefetch" href="/assets/js/266.a356cba1.js"><link rel="prefetch" href="/assets/js/267.a8c17038.js"><link rel="prefetch" href="/assets/js/268.404d0f59.js"><link rel="prefetch" href="/assets/js/269.d6c5b967.js"><link rel="prefetch" href="/assets/js/27.2d4e462d.js"><link rel="prefetch" href="/assets/js/270.ee054be0.js"><link rel="prefetch" href="/assets/js/271.0d024575.js"><link rel="prefetch" href="/assets/js/272.0a220788.js"><link rel="prefetch" href="/assets/js/273.f0094be8.js"><link rel="prefetch" href="/assets/js/274.96185f67.js"><link rel="prefetch" href="/assets/js/275.01716e6c.js"><link rel="prefetch" href="/assets/js/276.52d955a8.js"><link rel="prefetch" href="/assets/js/277.16592fb3.js"><link rel="prefetch" href="/assets/js/278.f37681fd.js"><link rel="prefetch" href="/assets/js/28.2d9f6816.js"><link rel="prefetch" href="/assets/js/29.22ed0fbf.js"><link rel="prefetch" href="/assets/js/3.b5505cb0.js"><link rel="prefetch" href="/assets/js/30.ab67dc1f.js"><link rel="prefetch" href="/assets/js/31.2b540d9e.js"><link rel="prefetch" href="/assets/js/32.1522eb16.js"><link rel="prefetch" href="/assets/js/33.f65f5043.js"><link rel="prefetch" href="/assets/js/34.80cc3f17.js"><link rel="prefetch" href="/assets/js/35.fa8dfa7e.js"><link rel="prefetch" href="/assets/js/36.7120533b.js"><link rel="prefetch" href="/assets/js/37.c5a78bc9.js"><link rel="prefetch" href="/assets/js/38.69c7afa0.js"><link rel="prefetch" href="/assets/js/39.0eef158e.js"><link rel="prefetch" href="/assets/js/4.ff141686.js"><link rel="prefetch" href="/assets/js/40.35c52f34.js"><link rel="prefetch" href="/assets/js/41.26d8c534.js"><link rel="prefetch" href="/assets/js/42.8bc84b00.js"><link rel="prefetch" href="/assets/js/43.d8065eba.js"><link rel="prefetch" href="/assets/js/44.b19c19b0.js"><link rel="prefetch" href="/assets/js/45.8d5a2abd.js"><link rel="prefetch" href="/assets/js/46.47f5b7a1.js"><link rel="prefetch" href="/assets/js/47.10f3e4e0.js"><link rel="prefetch" href="/assets/js/48.987bbb14.js"><link rel="prefetch" href="/assets/js/49.294ccf05.js"><link rel="prefetch" href="/assets/js/5.804a9c7d.js"><link rel="prefetch" href="/assets/js/50.95d99a21.js"><link rel="prefetch" href="/assets/js/51.f9b2e205.js"><link rel="prefetch" href="/assets/js/52.0762648d.js"><link rel="prefetch" href="/assets/js/53.abd32869.js"><link rel="prefetch" href="/assets/js/54.7441c3bb.js"><link rel="prefetch" href="/assets/js/55.4cefc5c5.js"><link rel="prefetch" href="/assets/js/56.f0a167f5.js"><link rel="prefetch" href="/assets/js/57.e7c2b85d.js"><link rel="prefetch" href="/assets/js/58.6efa9d32.js"><link rel="prefetch" href="/assets/js/59.d3b84ddf.js"><link rel="prefetch" href="/assets/js/6.9beabe83.js"><link rel="prefetch" href="/assets/js/60.17f54d49.js"><link rel="prefetch" href="/assets/js/61.3ec7fc02.js"><link rel="prefetch" href="/assets/js/62.d37f1c0c.js"><link rel="prefetch" href="/assets/js/63.42881792.js"><link rel="prefetch" href="/assets/js/64.11a6d2dd.js"><link rel="prefetch" href="/assets/js/65.bf703c16.js"><link rel="prefetch" href="/assets/js/66.ed5395d3.js"><link rel="prefetch" href="/assets/js/67.c1063689.js"><link rel="prefetch" href="/assets/js/68.c8485750.js"><link rel="prefetch" href="/assets/js/69.615e51f0.js"><link rel="prefetch" href="/assets/js/7.fec36169.js"><link rel="prefetch" href="/assets/js/70.a9ce79fc.js"><link rel="prefetch" href="/assets/js/71.e06041f7.js"><link rel="prefetch" href="/assets/js/72.43904462.js"><link rel="prefetch" href="/assets/js/73.c758fa40.js"><link rel="prefetch" href="/assets/js/74.5cfa12f4.js"><link rel="prefetch" href="/assets/js/75.ae5a3df9.js"><link rel="prefetch" href="/assets/js/76.30f68e44.js"><link rel="prefetch" href="/assets/js/77.47917316.js"><link rel="prefetch" href="/assets/js/78.eb1a0f14.js"><link rel="prefetch" href="/assets/js/79.44f29445.js"><link rel="prefetch" href="/assets/js/8.8d4140a1.js"><link rel="prefetch" href="/assets/js/80.15297bfe.js"><link rel="prefetch" href="/assets/js/81.0f68e8af.js"><link rel="prefetch" href="/assets/js/82.14d5a78a.js"><link rel="prefetch" href="/assets/js/83.499cba09.js"><link rel="prefetch" href="/assets/js/84.adfbad7c.js"><link rel="prefetch" href="/assets/js/85.2a7dc9f1.js"><link rel="prefetch" href="/assets/js/86.181c6b1f.js"><link rel="prefetch" href="/assets/js/87.e1b5f8f8.js"><link rel="prefetch" href="/assets/js/88.e48ff88a.js"><link rel="prefetch" href="/assets/js/89.3c55b2a2.js"><link rel="prefetch" href="/assets/js/9.02e0b20e.js"><link rel="prefetch" href="/assets/js/90.eb838c7c.js"><link rel="prefetch" href="/assets/js/91.f9de218b.js"><link rel="prefetch" href="/assets/js/92.1b34a23f.js"><link rel="prefetch" href="/assets/js/93.380e957c.js"><link rel="prefetch" href="/assets/js/94.feb95e99.js"><link rel="prefetch" href="/assets/js/95.6e722f95.js"><link rel="prefetch" href="/assets/js/96.8e625826.js"><link rel="prefetch" href="/assets/js/97.ae5a2075.js"><link rel="prefetch" href="/assets/js/98.716f5b6e.js"><link rel="prefetch" href="/assets/js/99.e0384484.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.e5addeae.css">
+  </head>
+  <body class="theme-mode-light">
+    <div id="app" data-server-rendered="true"><div class="theme-container sidebar-open have-rightmenu"><header class="navbar blur"><div title="目录" class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/img/logo.jpg" alt="从零学习大数据" class="logo"> <span class="site-name can-hide">从零学习大数据</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/frame/" class="nav-link">大数据框架</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="页面" class="dropdown-title"><a href="/ui/" class="link-title">页面</a> <span class="title" style="display:none;">页面</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/8309a5b876fc95e3/" class="nav-link">HTML</a></li><li class="dropdown-item"><!----> <a href="/pages/0a83b083bdf257cb/" class="nav-link">CSS</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术" class="dropdown-title"><a href="/technology/" class="link-title">技术</a> <span class="title" style="display:none;">技术</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/9a7ee40fc232253e/" class="nav-link">技术文档</a></li><li class="dropdown-item"><!----> <a href="/pages/4c778760be26d8b3/" class="nav-link">GitHub技巧</a></li><li class="dropdown-item"><!----> <a href="/pages/117708e0af7f0bd9/" class="nav-link">Nodejs</a></li><li class="dropdown-item"><!----> <a href="/pages/41f87d890d0a02af/" class="nav-link">博客搭建</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多" class="dropdown-title"><a href="/more/" class="link-title">更多</a> <span class="title" style="display:none;">更多</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/f2a556/" class="nav-link">学习</a></li><li class="dropdown-item"><!----> <a href="/pages/aea6571b7a8bae86/" class="nav-link">面试</a></li><li class="dropdown-item"><!----> <a href="/pages/2d615df9a36a98ed/" class="nav-link">心情杂货</a></li><li class="dropdown-item"><!----> <a href="/pages/baaa02/" class="nav-link">实用技巧</a></li><li class="dropdown-item"><!----> <a href="/friends/" class="nav-link">友情链接</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">关于</a></div><div class="nav-item"><a href="/pages/beb6c0bd8a66cea6/" class="nav-link">收藏</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="索引" class="dropdown-title"><a href="/archives/" class="link-title">索引</a> <span class="title" style="display:none;">索引</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/" class="nav-link">分类</a></li><li class="dropdown-item"><!----> <a href="/tags/" class="nav-link">标签</a></li><li class="dropdown-item"><!----> <a href="/archives/" class="nav-link">归档</a></li></ul></div></div> <a href="https://github.com/Yanko24" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <div class="sidebar-hover-trigger"></div> <aside class="sidebar" style="display:none;"><div class="blogger"><img src="img/logo.jpg"> <div class="blogger-info"><h3>Yanko</h3> <span>一个大数据行业的菜鸟</span></div></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/frame/" class="nav-link">大数据框架</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="页面" class="dropdown-title"><a href="/ui/" class="link-title">页面</a> <span class="title" style="display:none;">页面</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/8309a5b876fc95e3/" class="nav-link">HTML</a></li><li class="dropdown-item"><!----> <a href="/pages/0a83b083bdf257cb/" class="nav-link">CSS</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="技术" class="dropdown-title"><a href="/technology/" class="link-title">技术</a> <span class="title" style="display:none;">技术</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/9a7ee40fc232253e/" class="nav-link">技术文档</a></li><li class="dropdown-item"><!----> <a href="/pages/4c778760be26d8b3/" class="nav-link">GitHub技巧</a></li><li class="dropdown-item"><!----> <a href="/pages/117708e0af7f0bd9/" class="nav-link">Nodejs</a></li><li class="dropdown-item"><!----> <a href="/pages/41f87d890d0a02af/" class="nav-link">博客搭建</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="更多" class="dropdown-title"><a href="/more/" class="link-title">更多</a> <span class="title" style="display:none;">更多</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/f2a556/" class="nav-link">学习</a></li><li class="dropdown-item"><!----> <a href="/pages/aea6571b7a8bae86/" class="nav-link">面试</a></li><li class="dropdown-item"><!----> <a href="/pages/2d615df9a36a98ed/" class="nav-link">心情杂货</a></li><li class="dropdown-item"><!----> <a href="/pages/baaa02/" class="nav-link">实用技巧</a></li><li class="dropdown-item"><!----> <a href="/friends/" class="nav-link">友情链接</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">关于</a></div><div class="nav-item"><a href="/pages/beb6c0bd8a66cea6/" class="nav-link">收藏</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="索引" class="dropdown-title"><a href="/archives/" class="link-title">索引</a> <span class="title" style="display:none;">索引</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/" class="nav-link">分类</a></li><li class="dropdown-item"><!----> <a href="/tags/" class="nav-link">标签</a></li><li class="dropdown-item"><!----> <a href="/archives/" class="nav-link">归档</a></li></ul></div></div> <a href="https://github.com/Yanko24" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Flink基础</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Flink进阶</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Flink源码</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/pages/46833d/" class="sidebar-link">《从0学习Flink源码》——Flink源码编译及部署</a></li><li><a href="/pages/3f76c3/" aria-current="page" class="active sidebar-link">《从0学习Flink源码》——构建源码测试环境</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/pages/271d4f/" class="sidebar-link">《从0学习Flink源码》——Flink集群启动流程</a></li><li><a href="/pages/128d25/" class="sidebar-link">《从0学习Flink源码》——JobManager启动过程</a></li><li><a href="/pages/be504e/" class="sidebar-link">《从0学习Flink源码》——TaskManager启动流程</a></li><li><a href="/pages/c5dabf/" class="sidebar-link">《从0学习Flink源码》——State</a></li><li><a href="/pages/06b4da/" class="sidebar-link">《从0学习Flink源码》——Window</a></li><li><a href="/pages/78d1d9/" class="sidebar-link">深入理解Java虚拟机</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Flink面试题</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <div><main class="page"><div class="theme-vdoing-wrapper "><div class="articleInfo-wrap" data-v-1baff76c><div class="articleInfo" data-v-1baff76c><ul class="breadcrumbs" data-v-1baff76c><li data-v-1baff76c><a href="/" title="首页" class="iconfont icon-home router-link-active" data-v-1baff76c></a></li> <li data-v-1baff76c><a href="/categories/?category=%E3%80%8A%E4%BB%8E%E9%9B%B6%E5%AD%A6%E4%B9%A0Flink%E3%80%8B" title="分类" data-v-1baff76c>《从零学习Flink》</a></li><li data-v-1baff76c><a href="/categories/?category=Flink%E6%BA%90%E7%A0%81" title="分类" data-v-1baff76c>Flink源码</a></li></ul> <div class="info" data-v-1baff76c><div title="作者" class="author iconfont icon-touxiang" data-v-1baff76c><a href="https://github.com/Yanko24" target="_blank" title="作者" class="beLink" data-v-1baff76c>Yanko24</a></div> <div title="创建时间" class="date iconfont icon-riqi" data-v-1baff76c><a href="javascript:;" data-v-1baff76c>2022-04-24</a></div> <!----></div></div></div> <!----> <div class="content-wrapper"><div class="right-menu-wrapper"><div class="right-menu-margin"><div class="right-menu-title">目录</div> <div class="right-menu-content"></div></div></div> <h1><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAABKFJREFUSA3tVl1oFVcQnrMbrak3QUgkya1akpJYcrUtIqW1JvFBE9LiQ5v6JmJpolbMg32rVrhgoYK0QiMY6i9Y6EMaW5D+xFJaTYItIuK2Kr3+BJNwkxBj05sQY3b3nM6cs2dv9t7NT/vQJw/sndk5M/PNzJkzewGerP+pAmy+ON8lLzUJgA8ZYxYIYZmGYRnctDaWvJJAmTtfP1pvXsBCCPP8QFcCaRkZYACgDZFO4stNIcBCajEOlmmC9XpJ9bAGCaPaPmzPl32dvLSVu3BWCTQs0XQQ6g0DYgwLIoAZbBCdW/i+781o1VVlm/410mw4h06Y7bIPHNyWDyL4FHkX03Q8SrzNhZTZriieckWt7cL6MM85YcLpsi/7O9/iXFT6MswI0DmmpkSaJ0qLxFIm3+i1THHB3zmBH3PYx9CcykcLOeQVVa7QtdxTgQgEleX2AjHYfwA+2ddV77ruGoJUbhGDI09YSNXyMpUt5ylOzxgbUmtOp7NmbNt8v3arjTBfYELmLUV+M+nSawNNAUqpT3ClJWg5I3BLT+cGW/DXNGCa6tx1aakCGEigArTn4TDIPdrXXYKCZNrHLMCOEPvHBlLQ99s9eHB7EB6NTki73CVPQ2F5MSx/uRQixfmq7rK0wYD8w8E905bnPDfwoWs/rfv93NWN/ZfvwsLIU7A09gxECyISeGJkHAau98L97tuw7NXnoPyNF8FcYGLGKsOs0mN3OEyec9esGW/ZEl945dTP34wlR2FZVQWU1q0Cw8Tr7p+hgLLNL0FPxx/Q35mA8aEUrH6nCgwEl0tn7wUiZYJnNRh6DK4UH/k0lfyrsBKdPVv/AriGIQcEDQZ65LBAGe2Rzui9Ybjz7XUppz1/uKBbyVPGkN3ZAeC6hr0x7Nr38N5+EqkoOm17xpoqR9ohQF55ERSvr4Dkr3chNfC3DMzGJlNBElW8w9nsGQvhNGIzDkXzCg8cLK951xHsFBlTJspJNi3ZFIMF2AeDV3q8DNOB+YHi6QTrChDIWDBRi5U5f+ZMfJLu3ccrqxtdxk4SKH336LFxSmkqefwU5T8fhdSdQf9IVKD6aNiwI/hnmcAZ91isYMJIaCUCx9W098+LgruikeTqzqqxKPUwqJyCPJiyemVVZBOijDGjD38Os0jOiSPL1z3SPjXNANbiNPXAdzTfukjjuknNBbyz3nwgTd3AVFqUJ5hpHlq9MveLnWwttUfoygBmvVjuikxND3znrhsELnZk7k+OjIGxeNEkomyLVta0xxn+HZhjBc4YZ/AFjHjz9u3xRZl2BN4aq9nFwWh16IrQ1aHHEd3j1+4/dB9OtH4e29A2H1DyHQRmOSfQZ1Fy7MHBTGB6J/Djq6p3OxyO2cB+4Car7v/o3GXgfAkj23+x9ID1Teoamo/SXcbvSf2PX7Vc8DdCmE1vN9di+32P9/5YR3vLnhCVGUWBjEkr3yh4H8v9CzmsbdhzOKzsJKM90iFdaTMjRPhGVsakRvOaRidljo6H6G7j+ctrJpsP+4COhDIl0La2+FS4+5mlocBaXY5QnGZysIBYoeSsl5qQzrSj/cgNrfuEzlWBfwA+EjrZyWUvpAAAAABJRU5ErkJggg==">《从0学习Flink源码》——构建源码测试环境<!----></h1>  <div class="theme-vdoing-content content__default"><h4 id="_1-前言"><a href="#_1-前言" class="header-anchor">#</a> 1. 前言</h4> <p>上篇文章讲到了下载flink的源码并编译，结局了在编译中存在的问题，以后在本地提交运行WordCount的案例，这篇文章我们将Flink源码导入IDEA，构建源码测试环境。</p> <h4 id="_2-导入idea"><a href="#_2-导入idea" class="header-anchor">#</a> 2. 导入IDEA</h4> <p><img src="http://yanko.test.upcdn.net/images/%E5%AF%BC%E5%85%A5IDEA.png" alt=""></p> <p>导入IDEA之后，我们就可以看到flink的包结构，包含了很多的包，我们接下来大概分析一下对应的包都有什么作用。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>├── build-target -&gt; /Users/yankee/IdeaProjects/SourceCodeLearning/flink-1.13.6/flink-dist/target/flink-1.13.6-bin/flink-1.13.6（编译源码后的target目录，是一个软连接，链接到flink-dist/target/flink-1.13.6-bin/flink-1.13.6目录）
+├── docs（存放了Flink的markdown文档，可以编译生成网页）
+├── flink-annotations（Flink里面的一些注解）
+├── flink-clients（Flink的客户端）
+├── flink-connectors（Flink的connector，常见的有kafka、elasticsearch、hbase、hive、jdbc、cassandra、filesystem、rabbitmq，经常在source/sink中出现）
+│   ├── flink-connector-base
+│   ├── flink-connector-cassandra
+│   ├── flink-connector-elasticsearch-base
+│   ├── flink-connector-elasticsearch5
+│   ├── flink-connector-elasticsearch6
+│   ├── flink-connector-elasticsearch7
+│   ├── flink-connector-files
+│   ├── flink-connector-gcp-pubsub
+│   ├── flink-connector-hbase-1.4
+│   ├── flink-connector-hbase-2.2
+│   ├── flink-connector-hbase-base
+│   ├── flink-connector-hive
+│   ├── flink-connector-jdbc
+│   ├── flink-connector-kafka
+│   ├── flink-connector-kinesis
+│   ├── flink-connector-nifi
+│   ├── flink-connector-rabbitmq
+│   ├── flink-connector-twitter
+│   ├── flink-file-sink-common
+│   ├── flink-hadoop-compatibility
+│   ├── flink-hcatalog
+│   ├── flink-sql-connector-elasticsearch6
+│   ├── flink-sql-connector-elasticsearch7
+│   ├── flink-sql-connector-hbase-1.4
+│   ├── flink-sql-connector-hbase-2.2
+│   ├── flink-sql-connector-hive-1.2.2
+│   ├── flink-sql-connector-hive-2.2.0
+│   ├── flink-sql-connector-hive-2.3.6
+│   ├── flink-sql-connector-hive-3.1.2
+│   ├── flink-sql-connector-kafka
+│   ├── flink-sql-connector-kinesis
+│   ├── pom.xml
+│   └── target
+├── flink-container（Flink任务部署在Docke和kubernetes容器上）
+├── flink-contrib（是新模块的暂存/孵化区）
+│   ├── README.md
+│   ├── flink-connector-wikiedits
+│   ├── pom.xml
+│   └── target
+├── flink-core（API、资源分配、内存管理、配置等核心代码）
+├── flink-dist（编译完成后的flink就是在这里）
+├── flink-docs（从Flink的源代码创建HTML文件的生成器）
+├── flink-end-to-end-tests（测试类）
+│   ├── README.md
+│   ├── flink-batch-sql-test
+│   ├── flink-cli-test
+│   ├── flink-confluent-schema-registry
+│   ├── flink-connector-gcp-pubsub-emulator-tests
+│   ├── flink-dataset-allround-test
+│   ├── flink-dataset-fine-grained-recovery-test
+│   ├── flink-datastream-allround-test
+│   ├── flink-distributed-cache-via-blob-test
+│   ├── flink-elasticsearch5-test
+│   ├── flink-elasticsearch6-test
+│   ├── flink-elasticsearch7-test
+│   ├── flink-end-to-end-tests-common
+│   ├── flink-end-to-end-tests-common-kafka
+│   ├── flink-end-to-end-tests-hbase
+│   ├── flink-file-sink-test
+│   ├── flink-glue-schema-registry-test
+│   ├── flink-heavy-deployment-stress-test
+│   ├── flink-high-parallelism-iterations-test
+│   ├── flink-local-recovery-and-allocation-test
+│   ├── flink-metrics-availability-test
+│   ├── flink-metrics-reporter-prometheus-test
+│   ├── flink-netty-shuffle-memory-control-test
+│   ├── flink-parent-child-classloading-test-lib-package
+│   ├── flink-parent-child-classloading-test-program
+│   ├── flink-plugins-test
+│   ├── flink-python-test
+│   ├── flink-queryable-state-test
+│   ├── flink-quickstart-test
+│   ├── flink-rocksdb-state-memory-control-test
+│   ├── flink-sql-client-test
+│   ├── flink-state-evolution-test
+│   ├── flink-stream-sql-test
+│   ├── flink-stream-state-ttl-test
+│   ├── flink-stream-stateful-job-upgrade-test
+│   ├── flink-streaming-kafka-test
+│   ├── flink-streaming-kafka-test-base
+│   ├── flink-streaming-kinesis-test
+│   ├── flink-tpcds-test
+│   ├── flink-tpch-test
+│   ├── pom.xml
+│   ├── run-nightly-tests.sh
+│   ├── run-single-test.sh
+│   ├── target
+│   └── test-scripts
+├── flink-examples（Flink官网的案例）
+│   ├── flink-examples-batch
+│   ├── flink-examples-build-helper
+│   ├── flink-examples-streaming
+│   ├── flink-examples-table
+│   ├── pom.xml
+│   └── target
+├── flink-external-resources（Flink的外部资源模块）
+│   ├── flink-external-resource-gpu
+│   ├── pom.xml
+│   └── target
+├── flink-filesystems（Flink支持的文件系统，例如hadoop、mapr、s3）
+│   ├── flink-azure-fs-hadoop
+│   ├── flink-fs-hadoop-shaded
+│   ├── flink-hadoop-fs
+│   ├── flink-mapr-fs
+│   ├── flink-oss-fs-hadoop
+│   ├── flink-s3-fs-base
+│   ├── flink-s3-fs-hadoop
+│   ├── flink-s3-fs-presto
+│   ├── pom.xml
+│   └── target
+├── flink-formats（Flink格式化，例如avro、csv、json、parquet、orc）
+│   ├── flink-avro
+│   ├── flink-avro-confluent-registry
+│   ├── flink-avro-glue-schema-registry
+│   ├── flink-compress
+│   ├── flink-csv
+│   ├── flink-format-common
+│   ├── flink-hadoop-bulk
+│   ├── flink-json
+│   ├── flink-orc
+│   ├── flink-orc-nohive
+│   ├── flink-parquet
+│   ├── flink-sequence-file
+│   ├── flink-sql-avro
+│   ├── flink-sql-avro-confluent-registry
+│   ├── flink-sql-orc
+│   ├── flink-sql-parquet
+│   ├── pom.xml
+│   └── target
+├── flink-fs-tests（Flink文件系统的测试类）
+├── flink-java（Flink里面的各种聚合计算方法，算子操作）
+├── flink-jepsen（基于Jepsen框架的Clojure项目，用于在Flink的分布式协调中发现漏洞）
+├── flink-kubernetes（支持Flink可以运行在k8s上）
+├── flink-libraries（包含Flink的cep、gelly、state）
+│   ├── flink-cep
+│   ├── flink-cep-scala
+│   ├── flink-gelly
+│   ├── flink-gelly-examples
+│   ├── flink-gelly-scala
+│   ├── flink-state-processing-api
+│   ├── pom.xml
+│   └── target
+├── flink-mesos（支持Flink可以运行在mesos上）
+├── flink-metrics（Flink的metrics信息）
+│   ├── flink-metrics-core
+│   ├── flink-metrics-datadog
+│   ├── flink-metrics-dropwizard
+│   ├── flink-metrics-graphite
+│   ├── flink-metrics-influxdb
+│   ├── flink-metrics-jmx
+│   ├── flink-metrics-prometheus
+│   ├── flink-metrics-slf4j
+│   ├── flink-metrics-statsd
+│   ├── pom.xml
+│   └── target
+├── flink-optimizer（Flink的优化器，怎么合理的计算让一些任务能够串成任务链执行）
+├── flink-python（Flink的python）
+│   ├── MANIFEST.in
+│   ├── README.md
+│   ├── apache-flink-libraries
+│   ├── bin
+│   ├── dev
+│   ├── docs
+│   ├── lib
+│   ├── pom.xml
+│   ├── pyflink
+│   ├── setup.cfg
+│   ├── setup.py
+│   ├── src
+│   ├── target
+│   └── tox.ini
+├── flink-queryable-state（Flink的状态管理机制）
+│   ├── flink-queryable-state-client-java
+│   ├── flink-queryable-state-runtime
+│   ├── pom.xml
+│   └── target
+├── flink-quickstart（在IDEA快速生成项目）
+│   ├── flink-quickstart-java
+│   ├── flink-quickstart-scala
+│   ├── pom.xml
+│   └── target
+├── flink-runtime（Flink的运行时环境，相当重要）
+├── flink-runtime-web（Flink的WebUI）
+│   ├── README.md
+│   ├── pom.xml
+│   ├── src
+│   ├── target
+│   └── web-dashboard
+├── flink-scala（Flink的scala）
+├── flink-scala-shell
+│   ├── pom.xml
+│   ├── src
+│   ├── start-script
+│   └── target
+├── flink-state-backends（Flink的状态后端）
+│   ├── flink-statebackend-changelog
+│   ├── flink-statebackend-heap-spillable
+│   ├── flink-statebackend-rocksdb
+│   ├── pom.xml
+│   └── target
+├── flink-streaming-java（Flink的StreamAPI，包含datastream、watermark、checkpoint、function、算子、转换操作、window等）
+├── flink-streaming-scala
+├── flink-table（Flink的Table和SQL封装）
+│   ├── flink-sql-client
+│   ├── flink-sql-parser
+│   ├── flink-sql-parser-hive
+│   ├── flink-table-api-java
+│   ├── flink-table-api-java-bridge
+│   ├── flink-table-api-scala
+│   ├── flink-table-api-scala-bridge
+│   ├── flink-table-common
+│   ├── flink-table-planner
+│   ├── flink-table-planner-blink
+│   ├── flink-table-runtime-blink
+│   ├── flink-table-uber
+│   ├── flink-table-uber-blink
+│   ├── pom.xml
+│   └── target
+├── flink-test-utils-parent
+│   ├── flink-connector-test-utils
+│   ├── flink-test-utils
+│   ├── flink-test-utils-junit
+│   ├── pom.xml
+│   └── target
+├── flink-tests
+├── flink-walkthroughs
+│   ├── flink-walkthrough-common
+│   ├── flink-walkthrough-datastream-java
+│   ├── flink-walkthrough-datastream-scala
+│   ├── pom.xml
+│   └── target
+├── flink-yarn（支持Flink可以运行在yarn上）
+├── flink-yarn-tests（Flink的yarn测试）
+├── licenses
+├── pom.xml
+├── target
+│   ├── checkstyle-checker.xml
+│   ├── checkstyle-result.xml
+│   ├── checkstyle-suppressions.xml
+│   ├── flink-parent-1.13.6-shaded-tests.pom
+│   ├── flink-parent-1.13.6-shaded.pom
+│   └── maven-shared-archive-resources
+└── tools（工具）
+    ├── azure-pipelines
+    ├── change-version.sh
+    ├── ci
+    ├── force-shading
+    ├── list_deps.py
+    ├── maven
+    ├── releasing
+    └── update_notice_year.sh
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br><span class="line-number">104</span><br><span class="line-number">105</span><br><span class="line-number">106</span><br><span class="line-number">107</span><br><span class="line-number">108</span><br><span class="line-number">109</span><br><span class="line-number">110</span><br><span class="line-number">111</span><br><span class="line-number">112</span><br><span class="line-number">113</span><br><span class="line-number">114</span><br><span class="line-number">115</span><br><span class="line-number">116</span><br><span class="line-number">117</span><br><span class="line-number">118</span><br><span class="line-number">119</span><br><span class="line-number">120</span><br><span class="line-number">121</span><br><span class="line-number">122</span><br><span class="line-number">123</span><br><span class="line-number">124</span><br><span class="line-number">125</span><br><span class="line-number">126</span><br><span class="line-number">127</span><br><span class="line-number">128</span><br><span class="line-number">129</span><br><span class="line-number">130</span><br><span class="line-number">131</span><br><span class="line-number">132</span><br><span class="line-number">133</span><br><span class="line-number">134</span><br><span class="line-number">135</span><br><span class="line-number">136</span><br><span class="line-number">137</span><br><span class="line-number">138</span><br><span class="line-number">139</span><br><span class="line-number">140</span><br><span class="line-number">141</span><br><span class="line-number">142</span><br><span class="line-number">143</span><br><span class="line-number">144</span><br><span class="line-number">145</span><br><span class="line-number">146</span><br><span class="line-number">147</span><br><span class="line-number">148</span><br><span class="line-number">149</span><br><span class="line-number">150</span><br><span class="line-number">151</span><br><span class="line-number">152</span><br><span class="line-number">153</span><br><span class="line-number">154</span><br><span class="line-number">155</span><br><span class="line-number">156</span><br><span class="line-number">157</span><br><span class="line-number">158</span><br><span class="line-number">159</span><br><span class="line-number">160</span><br><span class="line-number">161</span><br><span class="line-number">162</span><br><span class="line-number">163</span><br><span class="line-number">164</span><br><span class="line-number">165</span><br><span class="line-number">166</span><br><span class="line-number">167</span><br><span class="line-number">168</span><br><span class="line-number">169</span><br><span class="line-number">170</span><br><span class="line-number">171</span><br><span class="line-number">172</span><br><span class="line-number">173</span><br><span class="line-number">174</span><br><span class="line-number">175</span><br><span class="line-number">176</span><br><span class="line-number">177</span><br><span class="line-number">178</span><br><span class="line-number">179</span><br><span class="line-number">180</span><br><span class="line-number">181</span><br><span class="line-number">182</span><br><span class="line-number">183</span><br><span class="line-number">184</span><br><span class="line-number">185</span><br><span class="line-number">186</span><br><span class="line-number">187</span><br><span class="line-number">188</span><br><span class="line-number">189</span><br><span class="line-number">190</span><br><span class="line-number">191</span><br><span class="line-number">192</span><br><span class="line-number">193</span><br><span class="line-number">194</span><br><span class="line-number">195</span><br><span class="line-number">196</span><br><span class="line-number">197</span><br><span class="line-number">198</span><br><span class="line-number">199</span><br><span class="line-number">200</span><br><span class="line-number">201</span><br><span class="line-number">202</span><br><span class="line-number">203</span><br><span class="line-number">204</span><br><span class="line-number">205</span><br><span class="line-number">206</span><br><span class="line-number">207</span><br><span class="line-number">208</span><br><span class="line-number">209</span><br><span class="line-number">210</span><br><span class="line-number">211</span><br><span class="line-number">212</span><br><span class="line-number">213</span><br><span class="line-number">214</span><br><span class="line-number">215</span><br><span class="line-number">216</span><br><span class="line-number">217</span><br><span class="line-number">218</span><br><span class="line-number">219</span><br><span class="line-number">220</span><br><span class="line-number">221</span><br><span class="line-number">222</span><br><span class="line-number">223</span><br><span class="line-number">224</span><br><span class="line-number">225</span><br><span class="line-number">226</span><br><span class="line-number">227</span><br><span class="line-number">228</span><br><span class="line-number">229</span><br><span class="line-number">230</span><br><span class="line-number">231</span><br><span class="line-number">232</span><br><span class="line-number">233</span><br><span class="line-number">234</span><br><span class="line-number">235</span><br><span class="line-number">236</span><br><span class="line-number">237</span><br><span class="line-number">238</span><br><span class="line-number">239</span><br><span class="line-number">240</span><br><span class="line-number">241</span><br><span class="line-number">242</span><br><span class="line-number">243</span><br><span class="line-number">244</span><br><span class="line-number">245</span><br><span class="line-number">246</span><br><span class="line-number">247</span><br><span class="line-number">248</span><br><span class="line-number">249</span><br><span class="line-number">250</span><br><span class="line-number">251</span><br><span class="line-number">252</span><br><span class="line-number">253</span><br><span class="line-number">254</span><br><span class="line-number">255</span><br><span class="line-number">256</span><br></div></div><h4 id="_3-运行测试代码"><a href="#_3-运行测试代码" class="header-anchor">#</a> 3. 运行测试代码</h4> <p>运行flink-tests模块下scheduling包下的AdaptiveSchedulerITCase案例，运行成功，没有任何问题。</p> <p><img src="http://yanko.test.upcdn.net/images/runtests.png" alt=""></p></div></div>  <div class="page-edit"><!----> <div class="tags"><a href="/tags/?tag=Flink" title="标签">#Flink</a></div> <!----></div> <div class="page-nav-wapper"><div class="page-nav-centre-wrap"><a href="/pages/46833d/" class="page-nav-centre page-nav-centre-prev"><div class="tooltip">《从0学习Flink源码》——Flink源码编译及部署</div></a> <a href="/pages/271d4f/" class="page-nav-centre page-nav-centre-next"><div class="tooltip">《从0学习Flink源码》——Flink集群启动流程</div></a></div> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/pages/46833d/" class="prev">《从0学习Flink源码》——Flink源码编译及部署</a></span> <span class="next"><a href="/pages/271d4f/">《从0学习Flink源码》——Flink集群启动流程</a>→
+      </span></p></div></div></div> <div class="article-list"><div class="article-title"><a href="/archives/" class="iconfont icon-bi">最近更新</a></div> <div class="article-wrapper"><dl><dd>01</dd> <dt><a href="/pages/78d1d9/"><div>
+            深入理解Java虚拟机
+            <!----></div></a> <span class="date">07-29</span></dt></dl><dl><dd>02</dd> <dt><a href="/pages/19ee33/"><div>
+            Flink中的多流转换
+            <!----></div></a> <span class="date">07-12</span></dt></dl><dl><dd>03</dd> <dt><a href="/pages/81a0f9/"><div>
+            Flink中Time和Window
+            <!----></div></a> <span class="date">07-11</span></dt></dl> <dl><dd></dd> <dt><a href="/archives/" class="more">更多文章&gt;</a></dt></dl></div></div></main></div> <div class="footer"><div class="icons"><a href="mailto:yangqi199808@foxmail.com" title="发邮件" target="_blank" class="iconfont icon-youjian"></a><a href="https://github.com/Yanko24" title="GitHub" target="_blank" class="iconfont icon-github"></a><a href="https://blog.csdn.net/weixin_43495317?spm=1000.2115.3001.5343" title="CSDN" target="_blank" class="iconfont icon-csdn"></a></div> 
+  Theme by
+  <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank" title="本站主题">Vdoing</a> 
+    | Copyright © 2022-2022
+    <span>从零学习大数据</span></div> <div class="buttons"><div title="返回顶部" class="button blur go-to-top iconfont icon-fanhuidingbu" style="display:none;"></div> <div title="去评论" class="button blur go-to-comment iconfont icon-pinglun" style="display:none;"></div> <div title="主题模式" class="button blur theme-mode-but iconfont icon-zhuti"><ul class="select-box" style="display:none;"><li class="iconfont icon-zidong">
+          跟随系统
+        </li><li class="iconfont icon-rijianmoshi">
+          浅色模式
+        </li><li class="iconfont icon-yejianmoshi">
+          深色模式
+        </li><li class="iconfont icon-yuedu">
+          阅读模式
+        </li></ul></div></div> <!----> <!----> <!----></div><div class="global-ui"><div></div></div></div>
+    <script src="/assets/js/app.69860091.js" defer></script><script src="/assets/js/2.5a5d1011.js" defer></script><script src="/assets/js/250.d18d274b.js" defer></script>
+  </body>
+</html>
